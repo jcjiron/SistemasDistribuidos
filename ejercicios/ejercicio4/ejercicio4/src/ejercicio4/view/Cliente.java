@@ -5,44 +5,109 @@
  */
 package ejercicio4.view;
 
+import servidor.Servidor;
 import ejercicio4.controler.CategoriaManager;
 import ejercicio4.model.Categoria;
+import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import servidor.Peticiones;
 
+public class Cliente extends javax.swing.JFrame {
 
-public class Frame extends javax.swing.JFrame {
+    public static final String RESPUESTA_RECIBIDA = "Respuesta recibida";
+    public static final String PETICION_ENVIADA = "Peticion enviada";
+    public static final String PROCESANDO_RESPUESTA = "Procesando respuesta";
 
     private String nameCategoria;
     private int idCategoria;
     private CategoriaManager manager;
     private DefaultListModel modelo;
+
+    private Socket socketCliente = null;
+
+    private ObjectInputStream entradaDatos = null;
+    private ObjectOutputStream salidaDatos = null;
+
     /**
      * Creates new form Frame
      */
-    public Frame() {
-        
+    public Cliente() {
         initComponents();
-   
+
+        //=================================================================
+        //=================================================================
+        //conectando con servidor
+        try {
+            System.out.println("antes del socket");
+            socketCliente = new Socket(Servidor.IP, Servidor.PUERTO);
+            System.out.println("despues del socket");
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //=================================================================
+        //=================================================================
+        try {
+
+            salidaDatos = new ObjectOutputStream(socketCliente.getOutputStream());
+            salidaDatos.writeInt(Servidor.PETICION_LISTAR);
+            salidaDatos.flush();
+            //salidaDatos.close();
+
+            System.out.println(PETICION_ENVIADA);
+            entradaDatos = new ObjectInputStream(socketCliente.getInputStream());
+            List<Categoria> list = (List<Categoria>) entradaDatos.readObject();
+            //entradaDatos.close();
+            System.out.println(RESPUESTA_RECIBIDA);
+            restartList(list);
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        cerrarConexion();
+
         
-        
-         manager=new CategoriaManager();
-         restartList();
-         panel.repaint();
+        panel.repaint();
+
     }
-    
-    public void restartList(){
-        List<Categoria> l=manager.listar();
+
+    public void restartList(List<Categoria> l) {
+        System.out.println(PROCESANDO_RESPUESTA);
         modelo = new DefaultListModel();
         modelo.removeAllElements();
-        for(Categoria ca:l){
-            modelo.addElement(ca.getIdCategoria()+"   "+ca.getNombreCategoria());
+        for (Categoria ca : l) {
+            modelo.addElement(ca.getIdCategoria() + "   " + ca.getNombreCategoria());
         }
-        
+
         lista.removeAll();
         lista.setModel(modelo);
-        
+    }
+
+    public void cerrarConexion() {
+        try {
+            salidaDatos.close();
+            entradaDatos.close();
+            socketCliente.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -163,27 +228,75 @@ public class Frame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-        nameCategoria=txtCategoria.getText();
-        idCategoria=Integer.parseInt(txtId.getText());
-        manager.alta(new Categoria(idCategoria,nameCategoria));
-        restartList();
-        panel.repaint();
+        nameCategoria = txtCategoria.getText();
+        idCategoria = Integer.parseInt(txtId.getText());
+
+        try {
+            socketCliente = new Socket(Servidor.IP, Servidor.PUERTO);
+            salidaDatos=new ObjectOutputStream(socketCliente.getOutputStream());
+            salidaDatos.writeInt(Peticiones.PETICION_ALTA);
+            salidaDatos.writeObject(new Categoria(idCategoria, nameCategoria));
+            
+            entradaDatos=new ObjectInputStream(socketCliente.getInputStream());
+            List<Categoria> list = (List<Categoria>) entradaDatos.readObject();
+            
+            cerrarConexion();
+            
+            restartList(list);
+            panel.repaint();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        nameCategoria=txtCategoria.getText();
-        idCategoria=Integer.parseInt(txtId.getText());
-        manager.baja(new Categoria(idCategoria,nameCategoria));
-        restartList();
-        panel.repaint();
+        nameCategoria = txtCategoria.getText();
+        idCategoria = Integer.parseInt(txtId.getText());
+
+        try {
+            socketCliente = new Socket(Servidor.IP, Servidor.PUERTO);
+            salidaDatos=new ObjectOutputStream(socketCliente.getOutputStream());
+            salidaDatos.writeInt(Peticiones.PETICION_BAJA);
+            salidaDatos.writeObject(new Categoria(idCategoria, nameCategoria));
+            
+            entradaDatos=new ObjectInputStream(socketCliente.getInputStream());
+            List<Categoria> list = (List<Categoria>) entradaDatos.readObject();
+            restartList(list);
+            panel.repaint();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        cerrarConexion();
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnCambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambioActionPerformed
-        nameCategoria=txtCategoria.getText();
-        idCategoria=Integer.parseInt(txtId.getText());
-        manager.editar(new Categoria(idCategoria,nameCategoria));
-        restartList();
-        panel.repaint();
+        nameCategoria = txtCategoria.getText();
+        idCategoria = Integer.parseInt(txtId.getText());
+
+        try {
+            socketCliente = new Socket(Servidor.IP, Servidor.PUERTO);
+            salidaDatos=new ObjectOutputStream(socketCliente.getOutputStream());
+            salidaDatos.writeInt(Peticiones.PETICION_CAMBIO);
+            salidaDatos.writeObject(new Categoria(idCategoria, nameCategoria));
+            
+            entradaDatos=new ObjectInputStream(socketCliente.getInputStream());
+            List<Categoria> list = (List<Categoria>) entradaDatos.readObject();
+            restartList(list);
+            panel.repaint();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        cerrarConexion();
+
     }//GEN-LAST:event_btnCambioActionPerformed
 
     /**
@@ -203,23 +316,34 @@ public class Frame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frame().setVisible(true);
+                Cliente frame = new Cliente();
+                frame.setVisible(true);
+
+                frame.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent evt) {
+                        frame.cerrarConexion();
+                        System.exit(0);
+                    }
+                });
             }
         });
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlta;

@@ -29,6 +29,7 @@ public class CategoriaManager implements Cat {
 
     private static final String ERROR_CONEXION = "Error al conectar base de datos";
     private static final String CONEXION_EXITOSA = "Conexion exitosa";
+    private static final String CONEXION_CERRADA = "Conexion cerrada";
 
     // JDBC driver name and database URL
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -63,9 +64,10 @@ public class CategoriaManager implements Cat {
 
     }
     
-    private void cerrarConexion(){
+    public void cerrarConexion(){
         try {
             conn.close();
+            System.out.println(CONEXION_CERRADA);
         } catch (SQLException ex) {
             Logger.getLogger(CategoriaManager.class.getName()).log(Level.SEVERE, null, ex);
         }
