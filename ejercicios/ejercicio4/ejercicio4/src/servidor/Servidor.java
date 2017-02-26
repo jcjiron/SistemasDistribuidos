@@ -1,6 +1,6 @@
 package servidor;
 
-import ejercicio4.controler.CategoriaManager;
+import ejercicio4.controler.CategoriaDAO;
 import ejercicio4.model.Categoria;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -40,7 +40,7 @@ public class Servidor implements Peticiones {
 
     public static void main(String args[]) {
         ServerSocket serverSocket = null;
-        CategoriaManager manager = new CategoriaManager();
+        CategoriaDAO manager = new CategoriaDAO();
 
         ObjectInputStream entradaDatos = null;
         ObjectOutputStream salidaDatos = null;

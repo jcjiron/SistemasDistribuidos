@@ -25,7 +25,7 @@ import java.util.UUID;
  *
  * @author juan
  */
-public class CategoriaManager implements Cat {
+public class CategoriaDAO implements Cat {
 
     private static final String ERROR_CONEXION = "Error al conectar base de datos";
     private static final String CONEXION_EXITOSA = "Conexion exitosa";
@@ -45,12 +45,12 @@ public class CategoriaManager implements Cat {
     private Connection conn = null;
 
 
-    public CategoriaManager() {
+    public CategoriaDAO() {
 
         try {
             Class.forName(JDBC_DRIVER);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CategoriaManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
@@ -58,18 +58,18 @@ public class CategoriaManager implements Cat {
             System.out.println(CONEXION_EXITOSA);
 
         } catch (SQLException ex) {
-            Logger.getLogger(CategoriaManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ERROR_CONEXION);
         }
 
     }
     
-    public void cerrarConexion(){
+    private void cerrarConexion(){
         try {
             conn.close();
             System.out.println(CONEXION_CERRADA);
         } catch (SQLException ex) {
-            Logger.getLogger(CategoriaManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -88,7 +88,7 @@ public class CategoriaManager implements Cat {
             pstmt.close();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(CategoriaManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -104,7 +104,7 @@ public class CategoriaManager implements Cat {
             pstmt.close();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(CategoriaManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -121,7 +121,7 @@ public class CategoriaManager implements Cat {
             pstmt.close();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(CategoriaManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -148,7 +148,7 @@ public class CategoriaManager implements Cat {
             pstmt.close();
             
         } catch (SQLException ex) {
-            Logger.getLogger(CategoriaManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }

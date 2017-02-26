@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS `tarea4`.`Hecho` (
+  `idHecho` INT NOT NULL AUTO_INCREMENT,
+  `nombreHecho` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`idHecho`))
+ENGINE = InnoDB

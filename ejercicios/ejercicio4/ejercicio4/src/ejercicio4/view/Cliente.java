@@ -6,7 +6,7 @@
 package ejercicio4.view;
 
 import servidor.Servidor;
-import ejercicio4.controler.CategoriaManager;
+import ejercicio4.controler.CategoriaDAO;
 import ejercicio4.model.Categoria;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
@@ -34,7 +34,7 @@ public class Cliente extends javax.swing.JFrame {
 
     private String nameCategoria;
     private int idCategoria;
-    private CategoriaManager manager;
+    private CategoriaDAO manager;
     private DefaultListModel modelo;
 
     private Socket socketCliente = null;
