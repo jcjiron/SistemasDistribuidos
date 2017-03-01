@@ -28,7 +28,7 @@ public class HechoDAO {
     private static final String SQL_DELETE = "CALL spDELETE(?)";
     private static final String SQL_UPDATE = "CALL spUPDATE(?,?)";
     private static final String SQL_READ = "CALL spREAD(?)";
-    private static final String SQL_READ_ALL = "CALL spREAD_ALL(?)";
+    private static final String SQL_READ_ALL = "CALL spREAD_ALL()";
 
     private static final String ERROR_CONEXION = "Error al conectar base de datos";
     private static final String CONEXION_EXITOSA = "Conexion exitosa";
@@ -40,8 +40,8 @@ public class HechoDAO {
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private static final String PORT = "3306";
     private static final String HOST = "localhost";
-    private static final String DATABASE_NAME = "distribuidos";
-    
+    private static final String DATABASE_NAME = "tarea4";
+
     private static final String DB_URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE_NAME;
 
     //  Database credentials
@@ -71,8 +71,8 @@ public class HechoDAO {
         getConnection();
         try {
             CallableStatement cStmt = connection.prepareCall(SQL_UPDATE);
-            cStmt.setString(1, echo.getNombreHecho());
-            cStmt.setInt(2, echo.getIdHecho());
+            cStmt.setInt(1, echo.getIdHecho());
+            cStmt.setString(2, echo.getNombreHecho());
             cStmt.execute();
             cStmt.close();
         } catch (SQLException ex) {
@@ -137,8 +137,8 @@ public class HechoDAO {
         }
     }
 
-    public void getConnection() {
-        connection=null;
+    private void getConnection() {
+        connection = null;
         try {
             Class.forName(JDBC_DRIVER);
         } catch (ClassNotFoundException ex) {
@@ -155,7 +155,7 @@ public class HechoDAO {
         }
     }
 
-    public void closeConnection(Connection connection) {
+    private void closeConnection(Connection connection) {
         try {
             connection.close();
             System.out.println(CONEXION_CERRADA);
@@ -164,7 +164,7 @@ public class HechoDAO {
         }
     }
 
-    public void closeResultSet(ResultSet rs) {
+    private void closeResultSet(ResultSet rs) {
         try {
             rs.close();
         } catch (SQLException ex) {
@@ -173,7 +173,7 @@ public class HechoDAO {
         }
     }
 
-    public void closeStatement(CallableStatement cs) {
+    private void closeStatement(CallableStatement cs) {
         try {
             cs.close();
         } catch (SQLException ex) {
