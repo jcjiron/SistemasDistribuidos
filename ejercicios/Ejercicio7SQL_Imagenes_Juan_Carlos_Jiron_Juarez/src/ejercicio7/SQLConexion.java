@@ -63,7 +63,7 @@ public class SQLConexion extends Thread {
         String JDBC_DRIVER = "com.mysql.jdbc.Driver";
         String PORT = "3306";
         String HOST = "localhost";
-        String DATABASE_NAME = "Mobiles";
+        String DATABASE_NAME = "ejercicio_jpa_alumno";
 
         //  Database credentials
         String USER = "root";
