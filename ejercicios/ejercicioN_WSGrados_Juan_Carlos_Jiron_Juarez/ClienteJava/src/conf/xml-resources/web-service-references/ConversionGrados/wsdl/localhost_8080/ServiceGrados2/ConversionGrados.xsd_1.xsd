@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://conversiones/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://conversiones/">
+
+<xs:element name="CelsiusToFahrenheit" type="tns:CelsiusToFahrenheit"/>
+
+<xs:element name="CelsiusToFahrenheitResponse" type="tns:CelsiusToFahrenheitResponse"/>
+
+<xs:element name="CelsiusToKelvin" type="tns:CelsiusToKelvin"/>
+
+<xs:element name="CelsiusToKelvinResponse" type="tns:CelsiusToKelvinResponse"/>
+
+<xs:element name="FahrenheitToCelsius" type="tns:FahrenheitToCelsius"/>
+
+<xs:element name="FahrenheitToCelsiusResponse" type="tns:FahrenheitToCelsiusResponse"/>
+
+<xs:element name="KelvinToCelsius" type="tns:KelvinToCelsius"/>
+
+<xs:element name="KelvinToCelsiusResponse" type="tns:KelvinToCelsiusResponse"/>
+
+<xs:complexType name="CelsiusToFahrenheit">
+<xs:sequence>
+<xs:element name="grados" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CelsiusToFahrenheitResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="KelvinToCelsius">
+<xs:sequence>
+<xs:element name="grados" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="KelvinToCelsiusResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CelsiusToKelvin">
+<xs:sequence>
+<xs:element name="grados" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CelsiusToKelvinResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="FahrenheitToCelsius">
+<xs:sequence>
+<xs:element name="grados" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="FahrenheitToCelsiusResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
