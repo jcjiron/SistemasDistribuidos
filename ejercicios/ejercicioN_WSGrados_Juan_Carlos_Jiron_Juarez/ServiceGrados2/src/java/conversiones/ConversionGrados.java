@@ -27,7 +27,7 @@ public class ConversionGrados {
     
      @WebMethod(operationName = "FahrenheitToCelsius")
     public double faharentToCels(@WebParam(name = "grados") double grados) {
-        return (grados-32)*(5/9);
+        return (grados-32d)*(5d/9d);
     }
     
      @WebMethod(operationName = "CelsiusToKelvin")
