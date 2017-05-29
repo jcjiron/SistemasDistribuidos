@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/05/2017 03:52:46 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="mx.ipn.model.Empleado" table="Empleado" catalog="demows" optimistic-lock="version">
+        <id name="idEmpleado" type="java.lang.Integer">
+            <column name="idEmpleado" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreEmpleado" type="string">
+            <column name="nombreEmpleado" length="45" not-null="true" />
+        </property>
+        <property name="paternoEmpleado" type="string">
+            <column name="paternoEmpleado" length="45" not-null="true" />
+        </property>
+        <property name="maternoEmpleado" type="string">
+            <column name="maternoEmpleado" length="45" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

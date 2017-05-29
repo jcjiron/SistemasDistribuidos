@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+        *** GENERATED FROM jax-ws.xml - DO NOT EDIT !                             ***
+        *** TO MODIFY wsimport options USE Web Service node -> Edit WS Attributes ***
+        *** TO CHANGE TARGETS GENERATED TO jaxws-build.xml COPY THOSE             ***
+        *** TARGETS TO ../build.xml AND MODIFY THAT FILE INSTEAD                  ***
+
+        --><project xmlns:xalan="http://xml.apache.org/xslt" xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3" xmlns:jaxws="http://www.netbeans.org/ns/jax-ws/1">
+    <!--
+                ===================
+                JAX-WS WSIMPORT SECTION
+                ===================
+            -->
+    <target name="wsimport-init" depends="init">
+        <mkdir dir="${build.generated.sources.dir}/jax-ws"/>
+        <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+            <classpath path="${libs.jaxws21.classpath}"/>
+        </taskdef>
+    </target>
+    <target name="wsimport-client-WsEmpleado" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/WsEmpleado"/>
+        <property name="wsdl-WsEmpleado" location="xml-resources/web-service-references/WsEmpleado/wsdl/localhost_8080/HibernateEmpleadoCRUD/WsEmpleado.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/WsEmpleado" destdir="${build.generated.dir}/jax-wsCache/WsEmpleado" wsdl="${wsdl-WsEmpleado}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/HibernateEmpleadoCRUD/WsEmpleado?wsdl" xnocompile="true" xendorsed="true" package="mx.ipn.wsc">
+            <depends file="${wsdl-WsEmpleado}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/WsEmpleado"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/WsEmpleado">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-WsEmpleado" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/WsEmpleado"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/mx/ipn/wsc"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-WsEmpleado"/>
+</project>

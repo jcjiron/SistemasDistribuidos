@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://ws.ip.mc/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.ip.mc/">
+
+<xs:element name="addEmpleado" type="tns:addEmpleado"/>
+
+<xs:element name="addEmpleadoResponse" type="tns:addEmpleadoResponse"/>
+
+<xs:element name="deleteEmpleado" type="tns:deleteEmpleado"/>
+
+<xs:element name="deleteEmpleadoResponse" type="tns:deleteEmpleadoResponse"/>
+
+<xs:element name="getEmpleadoById" type="tns:getEmpleadoById"/>
+
+<xs:element name="getEmpleadoByIdResponse" type="tns:getEmpleadoByIdResponse"/>
+
+<xs:element name="getEmpleados" type="tns:getEmpleados"/>
+
+<xs:element name="getEmpleadosResponse" type="tns:getEmpleadosResponse"/>
+
+<xs:element name="updateEmpleado" type="tns:updateEmpleado"/>
+
+<xs:element name="updateEmpleadoResponse" type="tns:updateEmpleadoResponse"/>
+
+<xs:complexType name="updateEmpleado">
+<xs:sequence>
+<xs:element name="empleado" type="tns:empleado" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="empleado">
+<xs:sequence>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="idEmpleado" type="xs:int" minOccurs="0"/>
+<xs:element name="maternoEmpleado" type="xs:string" minOccurs="0"/>
+<xs:element name="nombreEmpleado" type="xs:string" minOccurs="0"/>
+<xs:element name="paternoEmpleado" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateEmpleadoResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getEmpleadoById">
+<xs:sequence>
+<xs:element name="idEmpleado" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getEmpleadoByIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:empleado" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getEmpleados">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getEmpleadosResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:empleado" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addEmpleado">
+<xs:sequence>
+<xs:element name="empleado" type="tns:empleado" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addEmpleadoResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="deleteEmpleado">
+<xs:sequence>
+<xs:element name="IdEmpleado" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteEmpleadoResponse">
+<xs:sequence/>
+</xs:complexType>
+</xs:schema>
